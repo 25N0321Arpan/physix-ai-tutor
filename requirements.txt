@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 streamlit
 python-dotenv
 requests
 google-generativeai
 ollama
+=======
+streamlit
+python-dotenv
+requests
+google-generativeai
+ollama
+>>>>>>> 1852b5237fbf6dae6891bc0b8f74de7e20b0ac57
 sqlite-utils
