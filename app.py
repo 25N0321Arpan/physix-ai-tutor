@@ -194,15 +194,6 @@ progress_data = {
 
 st.line_chart(progress_data)
 
-# ---------------------------
-# Recommended
-# ---------------------------
-st.markdown("---")
-st.subheader("🎯 Recommended Today")
-
-st.info("📘 Solve 1 Quantum Mechanics PYQ")
-st.info("📝 Attempt Mock Test")
-st.info("📄 Revise Thermodynamics Notes")
 
 # ---------------------------
 # Quick Actions
