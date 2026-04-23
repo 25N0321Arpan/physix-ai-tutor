@@ -73,4 +73,8 @@ if "user" not in st.session_state:
 # ---------- MAIN APP ----------
 st.title("⚛️ PhysiX AI Tutor")
 st.success("Welcome " + st.session_state["user"])
+if st.session_state["user"] == "admin":
+    st.markdown("---")
+    if st.button("🔒 Open Admin Dashboard"):
+        st.switch_page("admin_panel.py")
 st.write("Use sidebar tools now.")
