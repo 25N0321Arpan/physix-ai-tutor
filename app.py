@@ -162,7 +162,7 @@ st.success("Welcome " + user)
 # ---------------------------
 # Admin Only
 # ---------------------------
-if user == "arpan":
+if user == "admin":
     st.markdown("---")
     if st.button("🔒 Open Admin Dashboard"):
         st.switch_page("admin_panel.py")
