@@ -78,7 +78,7 @@ with tab1:
 
     st.subheader("Upload Previous Year Question PDF")
 
-    exam = st.selectbox("Choose Exam", ["JAM", "JEST", "GATE"])
+    exam = st.selectbox("Choose Exam", ["JAM", "JEST", "GATE","CSIR NET"])
 
     uploaded = st.file_uploader("Upload PDF", type=["pdf"])
 
