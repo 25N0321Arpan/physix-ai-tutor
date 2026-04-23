@@ -127,10 +127,7 @@ if "user" not in st.session_state:
 # Role Based UI
 # ---------------------------
 user = st.session_state["user"]
-
-# Students: hide sidebar + top toolbar
-if user != "admin":
-    st.markdown("""
+st.markdown("""
     <style>
     [data-testid="stSidebar"] {display:none;}
 
@@ -166,27 +163,7 @@ if user == "arpan":
     st.markdown("---")
     if st.button("🔒 Open Admin Dashboard"):
         st.switch_page("pages/admin_panel.py")
-    st.markdown("""
-        <style>
-        [data-testid="stSidebar"] {display:none;}
-
-        header[data-testid="stHeader"] {
-            display:none;
-        }
-
-        div[data-testid="stToolbar"] {
-            display:none;
-        }
-
-        #MainMenu {
-            visibility:hidden;
-        }
-
-        footer {
-            visibility:hidden;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    
 
 
 # ---------------------------
