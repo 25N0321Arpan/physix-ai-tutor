@@ -3,13 +3,14 @@ import pandas as pd
 
 st.title("📘 Mock Test")
 
-exam = st.selectbox("Choose Exam", ["JAM", "JEST", "GATE"])
+exam = st.selectbox("Choose Exam", ["JAM", "JEST", "GATE", "CSIR NET"])
 num = st.slider("Number of Questions", 5, 20, 5)
 
 files = {
     "JAM": "data/questions/jam.csv",
     "JEST": "data/questions/jest.csv",
-    "GATE": "data/questions/gate.csv"
+    "GATE": "data/questions/gate.csv",
+    "CSIR NET": "data/questions/csir_net.csv"
 }
 
 if st.button("Start Test"):
