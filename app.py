@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import streamlit as st
 import sqlite3
 import hashlib
@@ -146,5 +145,4 @@ if "user" not in st.session_state:
 # ---------- MAIN APP ----------
 st.title("⚛️ PhysiX AI Tutor")
 st.success("Welcome " + st.session_state["user"])
->>>>>>> 1852b5237fbf6dae6891bc0b8f74de7e20b0ac57
 st.write("Use sidebar tools now.")
