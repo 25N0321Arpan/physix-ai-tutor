@@ -1,6 +1,10 @@
 import streamlit as st
 import sqlite3
 import hashlib
+from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).parent))
 from utils.theme import apply_theme
 
 st.set_page_config(page_title="PhysiX AI Tutor", page_icon="⚛️", layout="wide")
