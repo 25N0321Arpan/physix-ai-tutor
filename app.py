@@ -107,16 +107,83 @@ if "user" not in st.session_state:
 st.title("⚛️ PhysiX AI Tutor")
 st.success("Welcome " + st.session_state["user"])
 
-# Hidden Admin Button
-if st.session_state["user"] == "admin":
+user = st.session_state["user"]
+
+# ---------------------------
+# Admin Button
+# ---------------------------
+if user == "admin":
     st.markdown("---")
     if st.button("🔒 Open Admin Dashboard"):
         st.switch_page("admin_panel.py")
 
+# ---------------------------
+# Dashboard Metrics
+# ---------------------------
+st.markdown("---")
+st.subheader("📊 Student Dashboard")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Tests Taken", "12")
+
+with col2:
+    st.metric("Average Score", "78%")
+
+with col3:
+    st.metric("Study Streak", "5 Days")
+
+# ---------------------------
+# Progress Section
+# ---------------------------
+st.markdown("---")
+st.subheader("📈 Progress Overview")
+
+progress_data = {
+    "Week 1": 55,
+    "Week 2": 68,
+    "Week 3": 72,
+    "Week 4": 81
+}
+
+st.line_chart(progress_data)
+
+# ---------------------------
+# Recommended Actions
+# ---------------------------
+st.markdown("---")
+st.subheader("🎯 Recommended Today")
+
+st.info("📘 Solve 1 Quantum Mechanics PYQ")
+st.info("📝 Attempt Mock Test")
+st.info("📄 Revise Thermodynamics Notes")
+
+# ---------------------------
+# Quick Actions
+# ---------------------------
+st.markdown("---")
+st.subheader("⚡ Quick Start")
+
+c1, c2, c3 = st.columns(3)
+
+with c1:
+    if st.button("🧠 Ask Doubt"):
+        st.switch_page("pages/1_Ask_Doubt.py")
+
+with c2:
+    if st.button("📘 Mock Test"):
+        st.switch_page("pages/5_Mock_Test.py")
+
+with c3:
+    if st.button("📂 Upload Notes"):
+        st.switch_page("pages/9_PDF_Notes_Upload.py")
+
+# ---------------------------
 # Logout
+# ---------------------------
+st.markdown("---")
+
 if st.button("Logout"):
     del st.session_state["user"]
     st.rerun()
-
-st.markdown("---")
-st.write("Use sidebar tools now.")
