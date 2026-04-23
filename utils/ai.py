@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
+# Load environment variables
 load_dotenv()
+
+# Configure Gemini API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 
@@ -11,14 +14,15 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # -------------------------
 def physics_prompt(user_prompt):
     return f"""
-You are an expert Physics Tutor for JAM, JEST, GATE, MSc students.
+You are an expert Physics Tutor for JAM, JEST, GATE, MSc and university students.
 
 Rules:
 1. Solve step-by-step.
 2. Use equations clearly.
-3. Explain simply.
-4. Give final answer.
-5. If unsure, say so.
+3. Explain concepts simply.
+4. If numerical, show final answer.
+5. If unsure, say so honestly.
+6. Format cleanly.
 
 Question:
 {user_prompt}
@@ -26,7 +30,7 @@ Question:
 
 
 # -------------------------
-# Gemini Single Call
+# Run Gemini Model
 # -------------------------
 def run_gemini(prompt, model_name):
     model = genai.GenerativeModel(model_name)
@@ -35,50 +39,35 @@ def run_gemini(prompt, model_name):
 
 
 # -------------------------
-# Ollama Fallback
-# -------------------------
-def run_ollama(prompt, model="qwen3.5:4b"):
-    import ollama
-
-    response = ollama.chat(
-        model=model,
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response["message"]["content"]
-
-
-# -------------------------
-# Smart Router
+# Smart Gemini Router
 # -------------------------
 def route_prompt(mode, user_prompt):
 
     prompt = physics_prompt(user_prompt)
 
-    # Manual Ollama mode
-    if mode == "Ollama":
-        return run_ollama(prompt)
-
-    # Manual Gemini Pro
+    # Pro mode
     if mode == "Gemini Pro":
         try:
             return run_gemini(prompt, "gemini-3.1-pro-preview")
-        except:
-            return run_ollama(prompt)
+        except Exception:
+            pass
 
-    # Smart Auto Mode
+    # Try models in order
     models = [
         "gemini-2.5-flash",
         "gemini-2.0-flash",
         "gemini-3-flash-preview",
-        "gemini-3-pro-preview"
+        "gemini-pro-latest"
     ]
 
-    for m in models:
+    for model_name in models:
         try:
-            return run_gemini(prompt, m)
+            return run_gemini(prompt, model_name)
         except Exception:
             continue
 
-    # Final fallback
-    return run_ollama(prompt)
+    return """
+All Gemini models are temporarily unavailable or quota exhausted.
+
+Please try again later.
+"""
