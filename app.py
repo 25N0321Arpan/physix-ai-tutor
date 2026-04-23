@@ -128,26 +128,53 @@ if "user" not in st.session_state:
 # ---------------------------
 user = st.session_state["user"]
 st.markdown("""
-    <style>
-    [data-testid="stSidebar"] {display:none;}
+<style>
 
-    header[data-testid="stHeader"] {
-        display:none;
-    }
+/* Hide sidebar completely */
+[data-testid="stSidebar"] {
+    display: none !important;
+}
 
-    div[data-testid="stToolbar"] {
-        display:none;
-    }
+[data-testid="stSidebarNav"] {
+    display: none !important;
+}
 
-    #MainMenu {
-        visibility:hidden;
-    }
+section[data-testid="stSidebar"] {
+    display: none !important;
+    width: 0rem !important;
+    min-width: 0rem !important;
+}
 
-    footer {
-        visibility:hidden;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+/* Remove collapsed sidebar button */
+button[kind="header"] {
+    display:none !important;
+}
+
+/* Hide top header / toolbar */
+header[data-testid="stHeader"] {
+    display:none !important;
+}
+
+div[data-testid="stToolbar"] {
+    display:none !important;
+}
+
+#MainMenu {
+    visibility:hidden !important;
+}
+
+footer {
+    visibility:hidden !important;
+}
+
+/* Use full width */
+.block-container {
+    padding-top: 1rem;
+    max-width: 100%;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 
 # ---------------------------
