@@ -5,80 +5,53 @@ import google.generativeai as genai
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
+def build_prompt(user_prompt, mode):
 
-# -------------------------
-# Physics Prompt Builder
-# -------------------------
-def physics_prompt(user_prompt):
+    if mode == "Concept":
+        style = "Explain clearly in simple language with examples."
+
+    elif mode == "Exam":
+        style = "Answer in concise IIT JAM/JEST/GATE exam style with key steps."
+
+    elif mode == "Derivation":
+        style = "Give full mathematical derivation step-by-step."
+
+    elif mode == "Hint":
+        style = "Give only hints and approach, not full answer."
+
+    elif mode == "Viva":
+        style = "Act like professor asking viva questions and evaluating."
+
+    else:
+        style = "Solve clearly."
+
     return f"""
-You are an expert Physics Tutor for JAM, JEST, GATE, MSc students.
+You are an expert Physics Tutor.
 
-Rules:
-1. Solve step-by-step.
-2. Use equations clearly.
-3. Explain simply.
-4. Give final answer.
-5. If unsure, say so.
+{style}
 
 Question:
 {user_prompt}
 """
 
+def ask_gemini(prompt):
 
-# -------------------------
-# Gemini Single Call
-# -------------------------
-def run_gemini(prompt, model_name):
-    model = genai.GenerativeModel(model_name)
-    response = model.generate_content(prompt)
-    return response.text
-
-
-# -------------------------
-# Ollama Fallback
-# -------------------------
-def run_ollama(prompt, model="qwen3.5:4b"):
-    import ollama
-
-    response = ollama.chat(
-        model=model,
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response["message"]["content"]
-
-
-# -------------------------
-# Smart Router
-# -------------------------
-def route_prompt(mode, user_prompt):
-
-    prompt = physics_prompt(user_prompt)
-
-    # Manual Ollama mode
-    if mode == "Ollama":
-        return run_ollama(prompt)
-
-    # Manual Gemini Pro
-    if mode == "Gemini Pro":
-        try:
-            return run_gemini(prompt, "gemini-3.1-pro-preview")
-        except:
-            return run_ollama(prompt)
-
-    # Smart Auto Mode
     models = [
-        "gemini-2.5-flash",
         "gemini-2.0-flash",
-        "gemini-3-flash-preview",
-        "gemini-3-pro-preview"
+        "gemini-2.5-flash",
+        "gemini-pro-latest"
     ]
 
     for m in models:
         try:
-            return run_gemini(prompt, m)
-        except Exception:
+            model = genai.GenerativeModel(m)
+            r = model.generate_content(prompt)
+            return r.text
+        except:
             continue
 
-    # Final fallback
-    return run_ollama(prompt)
+    return "AI temporarily unavailable."
+
+def route_prompt(mode, question):
+    prompt = build_prompt(question, mode)
+    return ask_gemini(prompt)
